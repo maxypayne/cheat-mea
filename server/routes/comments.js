@@ -6,7 +6,8 @@ const Recipe = require("../models/recipe");
 router.post("/", (req, res, next) => {
   const comment = new Comment({
     description: req.body.comment,
-    recipeId: req.body.recipeId
+    recipeId: req.body.recipeId,
+    creatorId: req.body.creatorId
   });
   comment.save().then(savedComment => {
     console.log(savedComment);

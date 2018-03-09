@@ -127,8 +127,8 @@
           <br>
           <br>
           <br>
-          <label for="advisedDrink" class="label">Recommended drink:</label>
-          <input v-model="advisedDrink" type="text" name="advisedDrink" class="input">
+          <label for="recommendedDrink" class="label">Recommended drink:</label>
+          <input v-model="recommendedDrink" type="text" name="recommendedDrink" class="input">
           <br>
           <br>
           <span class="label">Add a picture of your meal:</span>
@@ -154,19 +154,20 @@
   </b-container>
 </template>
 <script>
+import IngredientAutoComplete from "../components/IngredientAutocomplete";
 import api from "../api";
 export default {
   data() {
     return {
       title: "",
       type: "",
+      recommendedDrink: "",
       difficulty: "",
       budget: "",
       steps: [""],
       ingredients: [{ name: "", quantity: "", unit: "" }],
       files: [],
       error: null,
-      advisedDrink: "",
       count: 2
     };
   },
@@ -175,15 +176,13 @@ export default {
       this.error = null;
       api
         .submitRecipe({
-          creator: this.$root.user.name,
-          creatorId: this.$root.user.id,
           title: this.title,
           type: this.type,
           difficulty: this.difficulty,
           budget: this.budget,
           steps: this.steps,
           ingredients: this.ingredients,
-          advisedDrink: this.advisedDrink,
+          recommendedDrink: this.recommendedDrink,
           picture: this.files[0]
           // creator: this.creator
         })
@@ -215,7 +214,8 @@ export default {
           console.log(response.data);
         });
     }
-  }
+  },
+  components: { IngredientAutoComplete }
 };
 </script>
 <style>

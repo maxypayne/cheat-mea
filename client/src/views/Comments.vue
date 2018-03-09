@@ -7,7 +7,6 @@
     v-on:keyup.enter="createComment"
     rows="4"
   ></textarea>
-  
     <div class="comments" v-for="(comment, i) in comments" :key="i">
       <div class="commentsinfo">
 
@@ -26,6 +25,8 @@
       </div>
     
   
+
+
 </div>
 </template>
 
@@ -80,5 +81,8 @@ export default {
 .description {
   background-color: rgb(246, 247, 248);
   padding: 20px;
+}
+.divs {
+  margin: 0 auto;
 }
 </style>

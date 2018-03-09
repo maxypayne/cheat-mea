@@ -93,7 +93,7 @@ import api from "../api";
 export default {
   data() {
     return {
-      solo: null,
+      solo: [],
       f: false,
       steps: ["", ""]
     };

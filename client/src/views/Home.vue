@@ -1,81 +1,41 @@
 <template>
   <b-container>
      
-    <b-carousel id="carousel1"
-                style="text-shadow: 1px 1px 2px #333;"
-                controls
-                indicators
-                background="#ababab"
-                :interval="4000"
-                img-width="1024"
-                img-height="480"
-                v-model="slide"
-                @sliding-start="onSlideStart"
-                @sliding-end="onSlideEnd"
-    >
+   
 
-      <!-- Text slides with image -->
-      <b-carousel-slide caption="First slide"
-                        text="Nulla vitae elit libero, a pharetra augue mollis interdum."
-                        img-src="https://lorempixel.com/1024/480/technics/2/"
-      ></b-carousel-slide>
-
-      <!-- Slides with custom text -->
-      <b-carousel-slide img-src="https://lorempixel.com/1024/480/technics/4/">
-        <h1>Hello world!</h1>
-      </b-carousel-slide>
-
-      <!-- Slides with image only -->
-      <b-carousel-slide img-src="https://lorempixel.com/1024/480/technics/8/">
-      </b-carousel-slide>
-
-      <!-- Slides with img slot -->
-      <!-- Note the classes .d-block and .img-fluid to prevent browser default image alignment -->
-      <b-carousel-slide>
-        <img slot="img" class="d-block img-fluid w-100" width="1024" height="480"
-             src="https://lorempixel.com/1024/480/technics/5/" alt="image slot">
-      </b-carousel-slide>
-
-      <!-- Slide with blank fluid image to maintain slide aspect ratio -->
-      <b-carousel-slide caption="Blank Image" img-blank img-alt="Blank image">
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-          eros felis, tincidunt a tincidunt eget, convallis vel est. Ut pellentesque
-          ut lacus vel interdum.
-        </p>
-      </b-carousel-slide>
-
-    </b-carousel>
-
-    <p class="mt-4">
-      Slide : {{ slide }}<br>
-
-    </p>
     
-      <input type="text" v-model="search"/>
+      
+      <input type="text" class="searchInput" v-model="search" placeholder="Search a recipe"/>
+      <br><br><br>
+      
     <b-card-group columns>
       
       <ul> 
-         <li v-for="recipe in filteredRecipes" :key="recipe">
+         <li v-for="recipe in filteredRecipes" :key="recipe._id">
          
         
    
           
-        <b-card title="Title"
+        <b-card
                 :img-src=recipe.picture
                 img-fluid
                 img-alt="image"
                 img-top>
-            <p class="card-text">
-              <img src="recipe.picture" alt="">
-              {{recipe.title}}
+                
 
+              <h1>{{recipe.title}}</h1>
               
-              {{recipe.type}}
-              {{recipe.dificulty}}
-            </p>
-            <small class="text-muted">Last updated 3 mins ago</small>
-            <router-link :to="`recipe/${recipe._id}`">More info</router-link> <br>
+
+              <p>Added by :{{recipe.creator }}</p>
+              
+              
+             
+             
+           <br>
+
+          <!-- <remove-recipe></remove-recipe> -->
+           
+            <router-link class="homeCards" :to="`recipe/${recipe._id}`">More info</router-link> <br>
            
         </b-card>
          </li>
@@ -90,16 +50,15 @@
 
 <script>
 import api from "../api";
-import { Carousel, Slide } from "vue-carousel";
+
 export default {
   data() {
     return {
       recipes: [],
-      slide: 0,
-      sliding: null,
       search: ""
     };
   },
+
   methods: {
     onSlideStart(slide) {
       this.sliding = true;
@@ -134,4 +93,34 @@ export default {
 li {
   list-style-type: none;
 }
+.searchInput {
+  width: 70%;
+  margin-left: 14%;
+  padding: 12px 15px 12px 40px;
+  font-size: 25px;
+  border: none;
+  background-color: transparent;
+  margin-top: 85px;
+  outline: none;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+h1 {
+  font-size: 42px;
+  text-align: center;
+}
+p {
+  text-align: center;
+}
+.homeCards {
+  background: darkred;
+  text-align: center;
+  padding: 6px 17px;
+  color: floralwhite;
+  border-radius: 23px 0 23px 0;
+  font-size: 16px;
+  width: 30%;
+  margin-left: 33%;
+}
+/* When the input field gets focus, change its width to 100% */
 </style>

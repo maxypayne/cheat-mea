@@ -19,14 +19,16 @@ const parser = multer({ storage });
 router.post("/recipe", parser.single("picture"), function(req, res, next) {
   const { file } = req;
   const recipe = new Recipe({
+    creator: req.body.creator,
+    creatorId: req.body.creatorId,
     title: req.body.title,
     type: req.body.type,
     difficulty: req.body.difficulty,
     budget: req.body.budget,
     steps: req.body.steps,
     picture: file.secure_url,
-    advisedDrink: req.body.advisedDrink
-    // creator = req.session.currentUser.name
+    advisedDrink: req.body.advisedDrink,
+    ingredients: req.body.ingredients
   });
   recipe.save().then(savedRecipe => {
     res.json(savedRecipe);
@@ -53,7 +55,7 @@ router.get("/recipe/:id", function(req, res, next) {
   });
 });
 
-router.delete("/recipe/:id", function(req, res, next) {
+router.delete("/profile/:id", function(req, res, next) {
   const recipeId = req.params.id;
 
   Recipe.findByIdAndRemove(recipeId, (err, recipe) => {
@@ -74,7 +76,6 @@ router.post("/recipe/:id", function(req, res, next) {
     budget: req.body.budget,
     steps: req.body.steps,
     advisedDrink: req.body.advisedDrink
-    // creator: req.session.currentUser.name
   };
 
   Recipe.findByIdAndUpdate(recipeId, update, (err, recipe) => {
@@ -84,5 +85,12 @@ router.post("/recipe/:id", function(req, res, next) {
     res.json(update);
   });
 });
-
+router.get("/profile", function(req, res, next) {
+  Recipe.find({ creatorId: req.query.creatorId }, (err, recipes) => {
+    if (err) {
+      res.json(err);
+    }
+    res.json(recipes);
+  });
+});
 module.exports = router;

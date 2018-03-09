@@ -63,9 +63,20 @@ export default {
   },
   submitRecipe(recipeInfo) {
     const formData = new FormData();
-    Object.keys(recipeInfo).forEach(key =>
-      formData.append(key, recipeInfo[key])
-    );
+    Object.keys(recipeInfo).forEach(key => {
+      if (key == "ingredients" || key == "steps") {
+        return;
+      }
+      formData.append(key, recipeInfo[key]);
+    });
+    recipeInfo.ingredients.forEach((ingredient, i) => {
+      formData.append(`ingredients[${i}][name]`, ingredient.name);
+      formData.append(`ingredients[${i}][quantity]`, ingredient.quantity);
+      formData.append(`ingredients[${i}][unit]`, ingredient.unit);
+    });
+    recipeInfo.steps.forEach((step, i) => {
+      formData.append(`steps[]`, step);
+    });
     return service
       .post("/recipe", formData, {
         headers: {
@@ -101,7 +112,7 @@ export default {
   },
   removeElement(id) {
     return service
-      .delete(`/recipe/${id}`)
+      .delete(`/profile/${id}`)
       .then(res => res.data)
       .catch(errHandler);
   },
@@ -120,6 +131,12 @@ export default {
   showCommentsForRecipe(recipeId) {
     return service
       .get(`/comments/${recipeId}`)
+      .then(res => res.data)
+      .catch(errHandler);
+  },
+  showOwnRecipes(creatorId) {
+    return service
+      .get(`/profile?creatorId=${creatorId}`)
       .then(res => res.data)
       .catch(errHandler);
   }

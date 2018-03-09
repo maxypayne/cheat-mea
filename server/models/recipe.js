@@ -8,8 +8,17 @@ const recipeSchema = new Schema({
   budget: String,
   steps: Array,
   advisedDrink: String,
-  creator: String,
+  creatorId: { type: Schema.Types.ObjectId, ref: "user" },
+  creator: { type: String },
   picture: String,
+  ingredients: [
+    {
+      name: String,
+      quantity: Number,
+      unit: String
+    }
+  ],
+  advisedDrink: String,
   comments: [{ type: Schema.Types.ObjectId, ref: "comment" }]
 });
 
