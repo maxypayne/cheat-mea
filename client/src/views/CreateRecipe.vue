@@ -7,7 +7,7 @@
         </div>
         <br>
         <br>
-        <form @submit.prevent="submitRecipe" id="form" action="/recipe" method="POST">
+        <form @submit.prevent="submitRecipe" id="form">
           <label for="title" class="label">Recipe title:</label>
           <input v-model="title" type="text" name="title" class="input is-medium">
           <br>
@@ -54,19 +54,19 @@
             <br>
             <span class="label">🧀 <span style="text-decoration:underline">Ingredients needed:</span></span>
             <br>
-            <label v-for="(ingredient, i) in ingredients" :key="i" class="label">
+            <label v-for="(ingredient, i) in " :key=" +1" class="label">
               <b-row>
                 <b-col>
                   <label>Ingredient {{ i + 1}}</label>
-                  <input v-model="ingredients[i].name" type="text" class="input">
+                  <input v-model="solo.ingredients[i].name" type="text" class="input">
                 </b-col>
                 <b-col>
                   <label class="label">Quantity</label>
-                  <input v-model="ingredients[i].quantity" type="text" class="input">
+                  <input v-model="solo.ingredients[i].quantity" type="text" class="input">
                 </b-col>
                 <b-col>
                   <label class="label">Unit</label>
-                  <select name="unit" form="unit" v-model="ingredients[i].unit" class="custom-select">
+                  <select name="unit" form="unit" v-model="solo.ingredients[i].unit" class="custom-select">
                     <option value="grams">grams</option>
                     <option value="centiliters">centiliters</option>
                     <option value="units">units</option>

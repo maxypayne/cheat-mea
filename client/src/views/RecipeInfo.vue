@@ -1,7 +1,7 @@
 <template>
 
   <b-container v-if="recipe">
-
+<div v-if="showRecipe">
     
     <b-row class="justify-content-md-center">
       <b-col col lg="8">
@@ -97,8 +97,7 @@
         </div>
 
 <br><br>
-
-
+<update-recipe @hideRecipe="showRecipe=false"></update-recipe>
 
 
     <div class="recipeinfo">
@@ -113,10 +112,10 @@
     </b-row>
     <div v-if="recipe.creatorId == this.$root.user.id">
 
-<update-recipe></update-recipe>
     </div>
+</div>
 
-
+<update-recipe @hideRecipe="showRecipe=false"></update-recipe>
     
     
   </b-container>
@@ -139,6 +138,7 @@ import UpdateRecipe from "./UpdateRecipe";
 export default {
   data() {
     return {
+      showRecipe: true,
       recipe: null,
       f: false,
       dessert:
